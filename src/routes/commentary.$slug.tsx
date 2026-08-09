@@ -63,7 +63,7 @@ function ArticlePage() {
         </figure>
 
         <div className="prose-article mx-auto max-w-[720px] px-6 py-14">
-          {article.body.map((paragraph, i) => (
+          {article.body.map((paragraph: string, i: number) => (
             <div key={paragraph.slice(0, 24)}>
               <p>{paragraph}</p>
               {article.pullQuote && i === 1 ? (
