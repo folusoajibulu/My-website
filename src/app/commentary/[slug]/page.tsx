@@ -83,9 +83,7 @@ export default async function ArticlePage({
           <h1 className="mt-5 text-center font-serif text-[2.25rem] leading-[1.15] text-navy sm:text-[3rem]">
             {article.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-relaxed text-muted-foreground">
-            {article.standfirst}
-          </p>
+
           <p className="mt-7 text-center text-xs uppercase tracking-[0.16em] text-muted-foreground">
             Commander Foluso Ajibulu (Rtd.) · {article.date} · {article.readTime}
           </p>

@@ -47,8 +47,13 @@ export async function getPostBySlug(slug: string): Promise<Article | null> {
 }
 
 function mapWPPostToArticle(post: WPPost): Article {
-  // Strip HTML tags for the excerpt/standfirst
-  const standfirst = post.excerpt.rendered.replace(/<[^>]+>/g, "").trim();
+  // Strip HTML tags and remove [&hellip;] or &hellip; from the excerpt/standfirst
+  const standfirst = post.excerpt.rendered
+    .replace(/<[^>]+>/g, "")
+    .replace(/\[&hellip;\]/g, "")
+    .replace(/&hellip;/g, "")
+    .replace(/&amp;/g, "&")
+    .trim();
   
   // Format date (e.g. 12 July 2026)
   const date = new Date(post.date).toLocaleDateString("en-GB", {
@@ -60,7 +65,7 @@ function mapWPPostToArticle(post: WPPost): Article {
   // Extract topic (category)
   let topic = "Uncategorized";
   if (post._embedded?.["wp:term"]?.[0]?.[0]?.name) {
-    topic = post._embedded["wp:term"][0][0].name;
+    topic = post._embedded["wp:term"][0][0].name.replace(/&amp;/g, "&");
   }
 
   // Extract featured image
@@ -75,6 +80,7 @@ function mapWPPostToArticle(post: WPPost): Article {
 
   // Decode basic HTML entities for title
   const title = post.title.rendered
+    .replace(/&amp;/g, "&")
     .replace(/&#8211;/g, "—")
     .replace(/&#8217;/g, "’")
     .replace(/&#8220;/g, "“")
