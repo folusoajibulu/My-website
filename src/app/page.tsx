@@ -30,11 +30,9 @@ export default async function Home() {
   const wpPosts = await getPosts();
   const featured = wpPosts.length > 0 ? wpPosts[0] : staticFeatured;
   const latest =
-    wpPosts.length > 1
-      ? wpPosts.slice(1, 4)
-      : wpPosts.length === 1
-        ? []
-        : staticLatest;
+    wpPosts.length > 0
+      ? wpPosts.slice(0, 3)
+      : staticLatest;
 
   return (
     <SiteShell>

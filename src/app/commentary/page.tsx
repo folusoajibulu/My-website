@@ -11,6 +11,8 @@ import {
 import { getPosts } from "@/lib/wordpress";
 import type { Metadata } from "next";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Commentary — Foluso Ajibulu",
   description:
