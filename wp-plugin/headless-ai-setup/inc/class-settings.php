@@ -12,8 +12,8 @@ class HAIC_Settings {
 
     public function register_settings_page() {
         add_menu_page(
-            'Headless AI Core',
-            'Headless AI Core',
+            'Headless AI Setup',
+            'Headless AI Setup',
             'manage_options',
             'headless-ai-core',
             [ $this, 'render_settings_ui' ],
@@ -42,7 +42,7 @@ class HAIC_Settings {
         $is_constant_gemini = defined( 'HAIC_GEMINI_API_KEY' );
         ?>
         <div class="wrap">
-            <h1>Headless AI Commerce Core Settings</h1>
+            <h1>Headless AI Setup Settings</h1>
             <?php settings_errors(); ?>
             <form method="post" action="options.php">
                 <?php settings_fields( 'haic_settings_group' ); ?>

@@ -14,6 +14,11 @@ export type Article = {
   body: string[];
   pullQuote?: string;
   contentHTML?: string;
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string;
+  };
 };
 
 export const articles: Article[] = [

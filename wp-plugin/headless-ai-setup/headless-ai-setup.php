@@ -1,9 +1,11 @@
 <?php
 /**
- * Plugin Name: Headless AI Commerce Core
- * Description: Universal headless routing, Next.js webhook automation, and Gemini AI-powered SEO metadata engine.
+ * Plugin Name: Headless AI Setup
+ * Plugin URI: https://yusufsaka.dev
+ * Description: Universal headless routing, Next.js webhook automation, Gemini AI-powered SEO, and a Simplified Publisher UI.
  * Version: 3.0.0
  * Author: Yusuf Abubakar Saka
+ * Author URI: https://yusufsaka.dev
  * License: GPL2
  */
 
@@ -20,7 +22,7 @@ define( 'HAIC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  * Main Plugin Class
  * Orchestrates the loading of all specialized modules.
  */
-class Headless_AI_Commerce_Core_Plugin {
+class Headless_AI_Setup_Plugin {
 
     public function __construct() {
         $this->load_dependencies();
@@ -36,6 +38,7 @@ class Headless_AI_Commerce_Core_Plugin {
         require_once HAIC_PLUGIN_DIR . 'inc/class-automation.php';
         require_once HAIC_PLUGIN_DIR . 'inc/class-ai-engine.php';
         require_once HAIC_PLUGIN_DIR . 'inc/class-seo.php';
+        require_once HAIC_PLUGIN_DIR . 'inc/class-publisher-ui.php';
     }
 
     /**
@@ -54,11 +57,14 @@ class Headless_AI_Commerce_Core_Plugin {
         
         // Automation / Next.js Webhooks
         new HAIC_Automation( $settings );
+
+        // Simplified Publisher UI
+        new HAIC_Publisher_UI( $settings );
     }
 }
 
 // Boot the plugin
-function run_headless_ai_commerce_core() {
-    new Headless_AI_Commerce_Core_Plugin();
+function run_headless_ai_setup() {
+    new Headless_AI_Setup_Plugin();
 }
-run_headless_ai_commerce_core();
+run_headless_ai_setup();

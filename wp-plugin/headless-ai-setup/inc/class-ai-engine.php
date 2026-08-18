@@ -23,7 +23,16 @@ class HAIC_AI_Engine {
         $api_key = $this->settings->get_gemini_api_key();
         if ( empty( $api_key ) ) return false;
 
-        $prompt = "You are an expert SEO specialist. Read the following article and provide an optimized SEO title (max 60 characters) and a meta description (max 160 characters). Return ONLY valid JSON format like this: {\"title\": \"Your Title\", \"description\": \"Your description\"}.\n\nArticle Content:\n" . wp_strip_all_tags( $content );
+        $prompt = "You are an expert SEO and editorial assistant. Your job is to format the provided raw text for web publishing and generate metadata.
+CRITICAL RULES:
+1. Do NOT rewrite, change, add, or remove ANY sentences or words from the author's original text. The text must remain pure and unadulterated.
+2. Only add HTML formatting: wrap paragraphs in <p> tags, and insert <h2> subheadings where there are logical transitions.
+3. Generate a strict SEO title (max 60 characters).
+4. Generate a strict meta description (max 150 characters). Do not copy the first paragraph; concisely summarize the core theme.
+5. Extract 5 comma-separated keywords based on the content.
+
+Original Text:
+" . wp_strip_all_tags( $content );
 
         $request_url = $this->api_url . '?key=' . $api_key;
         
@@ -37,12 +46,22 @@ class HAIC_AI_Engine {
             ],
             'generationConfig' => [
                 'response_mime_type' => 'application/json',
+                'responseSchema' => [
+                    'type' => 'OBJECT',
+                    'properties' => [
+                        'title' => [ 'type' => 'STRING', 'description' => 'Max 60 chars' ],
+                        'description' => [ 'type' => 'STRING', 'description' => 'Max 150 chars summary' ],
+                        'keywords' => [ 'type' => 'STRING', 'description' => 'Comma separated keywords' ],
+                        'formatted_content' => [ 'type' => 'STRING', 'description' => 'Original text wrapped in HTML with h2 tags' ]
+                    ],
+                    'required' => ['title', 'description', 'keywords', 'formatted_content']
+                ]
             ]
         ];
 
         $response = wp_remote_post( $request_url, [
             'method'  => 'POST',
-            'timeout' => 15,
+            'timeout' => 20, // increased timeout for generation
             'headers' => [ 'Content-Type' => 'application/json' ],
             'body'    => wp_json_encode( $body )
         ]);
@@ -61,8 +80,10 @@ class HAIC_AI_Engine {
             
             if ( isset( $seo_data['title'] ) && isset( $seo_data['description'] ) ) {
                 return [
-                    'title'       => sanitize_text_field( $seo_data['title'] ),
-                    'description' => sanitize_textarea_field( $seo_data['description'] ),
+                    'title'             => sanitize_text_field( $seo_data['title'] ),
+                    'description'       => sanitize_textarea_field( $seo_data['description'] ),
+                    'keywords'          => sanitize_text_field( $seo_data['keywords'] ?? '' ),
+                    'formatted_content' => $seo_data['formatted_content'] ?? '', // Sanitize later with wp_kses_post
                 ];
             }
         }

@@ -27,13 +27,25 @@ export async function generateMetadata({
     };
   }
 
+  const metaTitle = article.seo?.title || `${article.title} — Foluso Ajibulu`;
+  const metaDescription = article.seo?.description || article.standfirst;
+
   return {
-    title: `${article.title} — Foluso Ajibulu`,
-    description: article.standfirst,
+    title: metaTitle,
+    description: metaDescription,
+    keywords: article.seo?.keywords ? article.seo.keywords.split(',').map(k => k.trim()) : [article.topic, "Foluso Ajibulu", "Commentary"],
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: `https://folusoajibulu.com/commentary/${article.slug}`,
+    },
     openGraph: {
-      title: article.title,
-      description: article.standfirst,
+      title: metaTitle,
+      description: metaDescription,
       type: "article",
+      url: `https://folusoajibulu.com/commentary/${article.slug}`,
     },
   };
 }

@@ -13,6 +13,11 @@ interface WPPost {
     "wp:featuredmedia"?: Array<{ source_url: string }>;
     "wp:term"?: Array<Array<{ name: string }>>;
   };
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string;
+  };
 }
 
 export async function getPosts(): Promise<Article[]> {
@@ -96,5 +101,6 @@ function mapWPPostToArticle(post: WPPost): Article {
     image,
     body: [],
     contentHTML: post.content.rendered,
+    seo: post.seo,
   };
 }

@@ -29,6 +29,7 @@ class HAIC_SEO {
         return [
             'title'       => get_post_meta( $post_id, '_haic_seo_title', true ),
             'description' => get_post_meta( $post_id, '_haic_seo_description', true ),
+            'keywords'    => get_post_meta( $post_id, '_haic_seo_keywords', true ),
         ];
     }
 
@@ -51,6 +52,18 @@ class HAIC_SEO {
         if ( $seo_data && is_array( $seo_data ) ) {
             update_post_meta( $post_id, '_haic_seo_title', $seo_data['title'] );
             update_post_meta( $post_id, '_haic_seo_description', $seo_data['description'] );
+            update_post_meta( $post_id, '_haic_seo_keywords', $seo_data['keywords'] );
+
+            // Securely inject the formatted HTML back into the post body
+            if ( ! empty( $seo_data['formatted_content'] ) ) {
+                // Prevent infinite loop by removing the hook before updating
+                remove_action( 'save_post', [ $this, 'generate_and_save_seo_data' ], 10 );
+                wp_update_post([
+                    'ID'           => $post_id,
+                    'post_content' => wp_kses_post( $seo_data['formatted_content'] )
+                ]);
+                add_action( 'save_post', [ $this, 'generate_and_save_seo_data' ], 10, 3 );
+            }
         }
     }
 }

@@ -1,0 +1,92 @@
+/* Hide all standard WordPress Admin UI elements for the Publisher Role */
+#adminmenuback, #adminmenuwrap, #wpadminbar, #screen-meta-links, #screen-meta, #wpfooter, .notice, .update-nag { display: none !important; }
+html.wp-toolbar { padding-top: 0 !important; }
+#wpcontent, #wpfooter { margin-left: 0 !important; }
+#wpbody-content { padding-bottom: 0 !important; }
+
+/* Custom UI Styling */
+.haic-publisher-wrap {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    max-width: 1100px; margin: 0 auto 40px auto; padding: 0 20px;
+}
+
+/* Top Nav */
+.haic-top-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 0; border-bottom: 1px solid #eaeaea; margin-bottom: 30px;
+}
+.haic-user-greeting { font-size: 14px; color: #666; }
+.haic-user-greeting strong { color: #1a1a1a; }
+.haic-text-link { color: #666; text-decoration: none; font-size: 14px; }
+.haic-text-link:hover { color: #d63638; }
+.haic-text-danger { color: #d63638; }
+.haic-text-danger:hover { color: #a00; }
+
+.haic-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.haic-header h1 { font-size: 28px; font-weight: 600; margin: 0; color: #1a1a1a; }
+
+/* Toolbar */
+.haic-toolbar { margin-bottom: 20px; }
+.haic-toolbar form { display: flex; gap: 10px; align-items: center; }
+.haic-search-input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; flex-grow: 1; max-width: 300px; }
+.haic-filter-select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; }
+
+/* Buttons */
+.haic-btn {
+    display: inline-block; padding: 10px 20px; font-size: 14px; font-weight: 500;
+    text-decoration: none; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease;
+}
+.haic-btn-primary { background-color: #000; color: #fff; }
+.haic-btn-primary:hover { background-color: #333; color: #fff; }
+.haic-btn-secondary { background-color: #f1f1f1; color: #333; border-color: #ddd; }
+.haic-btn-secondary:hover { background-color: #e2e2e2; }
+.haic-btn-outline { background-color: transparent; color: #000; border-color: #ddd; }
+.haic-btn-outline:hover { border-color: #000; }
+.haic-btn-block { display: block; width: 100%; text-align: center; }
+.haic-btn-sm { padding: 6px 12px; font-size: 12px; }
+.haic-btn-lg { padding: 14px 24px; font-size: 16px; }
+
+/* Cards */
+.haic-card { background: #fff; border: 1px solid #e2e4e7; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 24px; }
+.haic-card h3 { margin-top: 0; margin-bottom: 16px; font-size: 16px; color: #1a1a1a; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+
+/* Publish Card Emphasis */
+.haic-publish-card { border-color: #000; background: #fafafa; }
+.haic-meta-desc { font-size: 13px; color: #666; margin-bottom: 15px; }
+
+/* Forms */
+.haic-form-group { margin-bottom: 24px; }
+.haic-input-title { width: 100%; font-size: 24px !important; padding: 12px 16px !important; border: 1px solid #ddd !important; border-radius: 6px !important; box-shadow: none !important; }
+.haic-input-title:focus { border-color: #000 !important; outline: none !important; box-shadow: 0 0 0 1px #000 !important; }
+.haic-select { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; max-width: 100%; }
+
+/* Editor Layout */
+.haic-editor-container { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+
+/* Image Preview */
+.haic-image-preview { width: 100%; height: 180px; background: #f8f9fa; border: 2px dashed #ddd; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; overflow: hidden; }
+.haic-image-preview img { width: 100%; height: 100%; object-fit: cover; }
+.haic-image-preview p { color: #888; margin: 0; }
+
+/* Dashboard List */
+.haic-post-list { margin: 0; padding: 0; list-style: none; }
+.haic-post-list li { padding: 16px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.haic-post-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+.haic-post-info { display: flex; flex-direction: column; gap: 6px; }
+.haic-post-title-link { font-size: 16px; color: #1a1a1a; text-decoration: none; }
+.haic-post-title-link:hover { color: #0056b3; text-decoration: underline; }
+
+.haic-post-meta { display: flex; gap: 10px; align-items: center; }
+.haic-status { font-size: 12px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+.haic-status-publish { background: #e6f6e6; color: #1e7e34; }
+.haic-status-draft { background: #fff3cd; color: #856404; }
+
+.haic-category-badge { font-size: 12px; color: #555; background: #f1f1f1; padding: 2px 8px; border-radius: 4px; }
+
+.haic-post-actions { display: flex; align-items: center; gap: 15px; }
+.haic-post-date { color: #666; font-size: 14px; }
+
+/* Alerts */
+.haic-alert { padding: 16px; border-radius: 6px; margin-bottom: 24px; font-weight: 500; transition: opacity 0.3s; }
+.haic-alert-success { background: #e6f6e6; color: #1e7e34; border: 1px solid #c3e6cb; }
