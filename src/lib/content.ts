@@ -10,9 +10,10 @@ export type Article = {
   standfirst: string;
   date: string;
   readTime: string;
-  image: string;
+  image?: string;
   body: string[];
   pullQuote?: string;
+  contentHTML?: string;
 };
 
 export const articles: Article[] = [
@@ -24,7 +25,7 @@ export const articles: Article[] = [
       "Nigeria's recurring crises of confidence are less a failure of individuals than a failure to let institutions mature beyond the men who lead them.",
     date: "12 July 2026",
     readTime: "9 min read",
-    image: governance,
+    image: governance.src,
     pullQuote:
       "A nation is not governed by the brilliance of its leaders. It is governed by the patience of its institutions.",
     body: [
@@ -43,7 +44,7 @@ export const articles: Article[] = [
       "A national history written only to flatter is of no use to the nation that reads it.",
     date: "28 June 2026",
     readTime: "7 min read",
-    image: history,
+    image: history.src,
     body: [
       "There is a temptation, in every young nation, to treat history as a form of public relations. The archive is mined for what is creditable and quietly closed over what is not. The result is a comfortable narrative and a poorly prepared citizenry.",
       "Honest history is more demanding. It requires that we hold two facts at once: that a decision was understandable in its moment, and that it was nonetheless wrong in its consequence. Students of Nigerian history should be able to state the arguments of those they disagree with in terms those people would recognise.",
@@ -59,7 +60,7 @@ export const articles: Article[] = [
       "Naval presence deters, but it does not govern. Maritime security in the Gulf requires a legal and economic architecture on land.",
     date: "9 June 2026",
     readTime: "8 min read",
-    image: security,
+    image: security.src,
     body: [
       "Piracy in the Gulf of Guinea is regularly discussed as a naval problem. It is more accurately a governance problem that expresses itself at sea.",
       "Ships and patrols matter. A credible presence raises the cost of an attack and shortens the window in which one can be completed. But the men in those skiffs come from coastal communities with collapsed livelihoods, and they sell what they seize into markets that operate onshore, in daylight, with paperwork.",
@@ -75,7 +76,7 @@ export const articles: Article[] = [
       "Non-alignment was once a posture. In a genuinely multipolar world it must become a strategy.",
     date: "21 May 2026",
     readTime: "10 min read",
-    image: diplomacy,
+    image: diplomacy.src,
     body: [
       "For much of the post-independence period, Nigerian foreign policy could rely on a relatively stable international order in which the major questions were settled elsewhere. That period has ended.",
       "The emerging arrangement offers African states more counterparties and, with them, more leverage. It also offers more opportunities to be played against one another. Leverage is only useful to a state that knows precisely what it wants.",
@@ -92,27 +93,54 @@ export const topics = [
   {
     number: "01",
     name: "History",
+    slug: "history",
+    match: ["History"],
     description:
       "Understanding Nigeria's past and its continuing influence on the present.",
   },
   {
     number: "02",
     name: "Politics & Governance",
+    slug: "governance",
+    match: ["Governance", "Politics", "Politics & Governance"],
     description: "Examining institutions, leadership and the conduct of public affairs.",
   },
   {
     number: "03",
     name: "International Relations",
+    slug: "international-relations",
+    match: ["International Relations"],
     description:
       "Perspectives on diplomacy, global affairs and Nigeria's place in the world.",
   },
   {
     number: "04",
     name: "National Security",
+    slug: "national-security",
+    match: ["National Security"],
     description:
       "Insights shaped by decades of military service and strategic appointments.",
   },
 ];
+
+export function topicBySlug(slug: string) {
+  return topics.find((topic) => topic.slug === slug);
+}
+
+export function topicForArticle(topicName: string) {
+  return topics.find(
+    (topic) => topic.name === topicName || topic.match.includes(topicName),
+  );
+}
+
+export function articlesForTopic(list: Article[], slug?: string) {
+  if (!slug) return list;
+  const topic = topicBySlug(slug);
+  if (!topic) return list;
+  return list.filter(
+    (article) => topic.match.includes(article.topic) || article.topic === topic.name,
+  );
+}
 
 export const timeline = [
   {

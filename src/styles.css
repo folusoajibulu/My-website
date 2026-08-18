@@ -84,6 +84,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
 
   body {
@@ -94,6 +95,16 @@
     text-rendering: optimizeLegibility;
   }
 
+  ::selection {
+    background: var(--navy);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
   h1,
   h2,
   h3,
@@ -101,6 +112,20 @@
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.01em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -178,6 +203,23 @@
   }
 }
 
+@utility skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--navy);
+  color: var(--primary-foreground);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
 /* Long-form reading measure */
 @utility prose-article {
   font-size: 1.1875rem;
@@ -188,9 +230,46 @@
     margin-bottom: 1.6em;
   }
 
-  & h2 {
+  & > p:first-of-type::first-letter,
+  & > div:first-child p:first-of-type::first-letter {
+    font-family: var(--font-serif);
+    float: left;
+    font-size: 3.55em;
+    line-height: 0.78;
+    padding-right: 0.14em;
+    padding-top: 0.06em;
+    color: var(--navy);
+  }
+
+  & h2,
+  & h3 {
     font-size: 1.75rem;
     margin: 2.4rem 0 1rem;
+    color: var(--navy);
+  }
+
+  & a {
+    color: var(--navy);
+    border-bottom: 1px solid var(--gold);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--gold);
+    }
+  }
+
+  & ul,
+  & ol {
+    margin: 0 0 1.6em 1.25em;
+  }
+
+  & li {
+    margin-bottom: 0.5em;
+  }
+
+  & img {
+    width: 100%;
+    margin: 2rem 0;
   }
 
   & blockquote {
