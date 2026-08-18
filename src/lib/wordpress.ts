@@ -13,7 +13,7 @@ interface WPPost {
     "wp:featuredmedia"?: Array<{ source_url: string }>;
     "wp:term"?: Array<Array<{ name: string }>>;
   };
-  seo?: {
+  haic_seo?: {
     title?: string;
     description?: string;
     keywords?: string;
@@ -105,6 +105,6 @@ function mapWPPostToArticle(post: WPPost): Article {
     image,
     body: [],
     contentHTML: post.content.rendered,
-    seo: post.seo,
+    seo: post.haic_seo,
   };
 }
