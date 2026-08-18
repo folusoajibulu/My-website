@@ -58,6 +58,10 @@ function mapWPPostToArticle(post: WPPost): Article {
     .replace(/\[&hellip;\]/g, "")
     .replace(/&hellip;/g, "")
     .replace(/&amp;/g, "&")
+    .replace(/&#8211;/g, "—")
+    .replace(/&#8217;/g, "’")
+    .replace(/&#8220;/g, "“")
+    .replace(/&#8221;/g, "”")
     .trim();
   
   // Format date (e.g. 12 July 2026)
