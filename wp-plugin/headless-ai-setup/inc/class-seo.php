@@ -30,6 +30,7 @@ class HAIC_SEO {
             'title'       => get_post_meta( $post_id, '_haic_seo_title', true ),
             'description' => get_post_meta( $post_id, '_haic_seo_description', true ),
             'keywords'    => get_post_meta( $post_id, '_haic_seo_keywords', true ),
+            'error'       => get_post_meta( $post_id, '_haic_seo_error', true ),
         ];
     }
 
@@ -48,6 +49,11 @@ class HAIC_SEO {
         // Prevent timeout issues by running asynchronously or in a fast hook, but for now we run sync 
         // since Gemini is fast. A robust production version might queue this in WP-Cron.
         $seo_data = $this->ai_engine->generate_seo_metadata( $post->post_content );
+
+        if ( isset( $seo_data['error'] ) ) {
+            update_post_meta( $post_id, '_haic_seo_error', $seo_data['error'] );
+            return;
+        }
 
         if ( $seo_data && is_array( $seo_data ) ) {
             update_post_meta( $post_id, '_haic_seo_title', $seo_data['title'] );

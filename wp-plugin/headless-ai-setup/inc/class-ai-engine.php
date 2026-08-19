@@ -65,27 +65,32 @@ Original Text:
             'body'    => wp_json_encode( $body )
         ]);
 
-        if ( is_wp_error( $response ) ) return false;
+        if ( is_wp_error( $response ) ) {
+            return [ 'error' => 'wp_remote_post failed: ' . $response->get_error_message() ];
+        }
 
         $response_code = wp_remote_retrieve_response_code( $response );
-        if ( $response_code !== 200 ) return false;
-
         $response_body = wp_remote_retrieve_body( $response );
+        
+        if ( $response_code !== 200 ) {
+            return [ 'error' => 'API returned code ' . $response_code . '. Body: ' . $response_body ];
+        }
+
         $data = json_decode( $response_body, true );
 
         if ( isset( $data['candidates'][0]['content']['parts'][0]['text'] ) ) {
             $json_text = trim( $data['candidates'][0]['content']['parts'][0]['text'] );
             
-            // Strip markdown JSON blocks if Gemini ignored the mime type
-            if ( strpos( $json_text, '```json' ) === 0 ) {
-                $json_text = substr( $json_text, 7 );
-                if ( substr( $json_text, -3 ) === '```' ) {
-                    $json_text = substr( $json_text, 0, -3 );
-                }
-            }
+            // Robustly strip any markdown formatting
+            $json_text = preg_replace('/^```(?:json)?\s*/i', '', $json_text);
+            $json_text = preg_replace('/\s*```$/', '', $json_text);
             
             $seo_data = json_decode( $json_text, true );
             
+            if ( json_last_error() !== JSON_ERROR_NONE ) {
+                return [ 'error' => 'JSON Decode Failed: ' . json_last_error_msg() . ' | Raw: ' . $json_text ];
+            }
+
             if ( isset( $seo_data['title'] ) && isset( $seo_data['description'] ) ) {
                 return [
                     'title'             => sanitize_text_field( $seo_data['title'] ),
@@ -93,9 +98,11 @@ Original Text:
                     'keywords'          => sanitize_text_field( $seo_data['keywords'] ?? '' ),
                     'formatted_content' => $seo_data['formatted_content'] ?? '', // Sanitize later with wp_kses_post
                 ];
+            } else {
+                return [ 'error' => 'JSON missing title or description. Raw: ' . $json_text ];
             }
         }
-
-        return false;
+        
+        return [ 'error' => 'No candidates returned. Body: ' . $response_body ];
     }
 }
