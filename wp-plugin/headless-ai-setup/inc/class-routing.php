@@ -24,6 +24,18 @@ class HAIC_Routing {
         // Password Reset
         add_filter( 'retrieve_password_message', [ $this, 'rewrite_reset_password_email' ], 10, 4 );
         add_action( 'rest_api_init', [ $this, 'register_reset_password_endpoint' ] );
+
+        // Login Interceptor for custom Next.js admin page
+        add_filter( 'wp_login_errors', [ $this, 'intercept_custom_login_errors' ], 10, 2 );
+    }
+
+    public function intercept_custom_login_errors( $errors, $redirect_to ) {
+        // If the login request came from our custom Next.js form and there are errors
+        if ( isset( $_POST['custom_error_redirect'] ) && $errors->has_errors() ) {
+            wp_redirect( esc_url_raw( $_POST['custom_error_redirect'] ) );
+            exit;
+        }
+        return $errors;
     }
 
     public function handle_edge_redirect() {
