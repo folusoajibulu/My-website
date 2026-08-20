@@ -2,7 +2,9 @@
 const nextConfig = {
   async redirects() {
     // Read the WordPress URL from env, or default to the known one
-    const wpUrl = process.env.NEXT_PUBLIC_WP_URL || 'https://blog.ajibulu.com';
+    let wpUrl = process.env.WORDPRESS_API_URL || 'https://blog.folusoajibulu.com';
+    // Remove trailing slash if present
+    wpUrl = wpUrl.replace(/\/$/, '');
     
     // URL encode the destination we want after login
     // This points to the custom publisher UI we built
