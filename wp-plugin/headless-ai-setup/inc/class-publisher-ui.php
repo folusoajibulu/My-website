@@ -56,6 +56,7 @@ class HAIC_Publisher_UI {
         wp_enqueue_media();
         wp_enqueue_style( 'haic-publisher-css', HAIC_PLUGIN_URL . 'assets/css/publisher.css', [], HAIC_VERSION );
         wp_enqueue_script( 'haic-publisher-js', HAIC_PLUGIN_URL . 'assets/js/publisher.js', [ 'jquery' ], HAIC_VERSION, true );
+        wp_deregister_script( 'heartbeat' );
     }
 
     public function render_publisher_dashboard() {
@@ -114,12 +115,21 @@ class HAIC_Publisher_UI {
             <a href="?page=haic-publisher&view=editor" class="haic-btn haic-btn-primary">Write New Publication</a>
         </div>
 
+        <?php
+        // Display error message if the AI Engine failed during publish
+        $ai_error = get_transient( 'haic_seo_error_' . get_current_user_id() );
+        if ( $ai_error ) {
+            echo '<div class="haic-message haic-error"><strong>AI Engine Error:</strong> ' . esc_html( $ai_error ) . '</div>';
+            delete_transient( 'haic_seo_error_' . get_current_user_id() );
+        }
+        ?>
+
         <?php if ( isset( $_GET['success'] ) ) : ?>
             <div class="haic-alert haic-alert-success" id="haic-success-alert">
                 Publication saved successfully! It is now syncing to the live website.
             </div>
         <?php elseif ( isset( $_GET['deleted'] ) ) : ?>
-            <div class="haic-alert haic-alert-success" id="haic-success-alert">
+            <div class="haic-alert haic-deleted-alert" id="haic-deleted-alert">
                 Publication was successfully deleted.
             </div>
         <?php endif; ?>

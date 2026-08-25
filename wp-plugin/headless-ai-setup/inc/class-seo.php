@@ -52,6 +52,7 @@ class HAIC_SEO {
 
         if ( isset( $seo_data['error'] ) ) {
             update_post_meta( $post_id, '_haic_seo_error', $seo_data['error'] );
+            set_transient( 'haic_seo_error_' . get_current_user_id(), $seo_data['error'], 60 );
             return;
         }
 

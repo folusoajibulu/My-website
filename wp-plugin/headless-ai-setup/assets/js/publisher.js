@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
             // Auto fade out alert after 5 seconds
             setTimeout(function() {
                 $('#haic-success-alert').fadeOut('slow');
+                $('#haic-deleted-alert').fadeOut('slow');
             }, 5000);
         }
     }

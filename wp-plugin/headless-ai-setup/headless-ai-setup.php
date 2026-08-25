@@ -14,7 +14,7 @@ if ( ! defined( 'ABSOLUTE_PATH' ) && ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'HAIC_VERSION', '3.0.0' );
+define( 'HAIC_VERSION', '3.0.1' );
 define( 'HAIC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HAIC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -68,3 +68,9 @@ function run_headless_ai_setup() {
     new Headless_AI_Setup_Plugin();
 }
 run_headless_ai_setup();
+
+// Fix 508 Resource Limit errors on shared hosting by completely disabling Heartbeat API globally
+add_action( 'init', 'haic_disable_heartbeat', 1 );
+function haic_disable_heartbeat() {
+    wp_deregister_script('heartbeat');
+}

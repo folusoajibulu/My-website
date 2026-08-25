@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/commentary/test-post":{},"/commentary/hello-world":{}},"dynamicRoutes":{"/commentary/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/commentary/[slug]","routeRegex":"^\\/commentary\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"1e1f55cfb4fceddb94ac430374c3c2c3","previewModeSigningKey":"11ea0508aeb221d314f16fe4eb8ce8d1678f4b2c715ae48de82c13e506511af7","previewModeEncryptionKey":"87baa42bfd2f5dea5f2df748269488828086b9cb01c9c42b450e9a7b3678368b"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "fbadc8e6ef6aa78448a31f9259d876a9",
+    "previewModeSigningKey": "ac17856258bce22bb2373b45e165f195fb6baebca50d12f796dd204f79fb28ec",
+    "previewModeEncryptionKey": "da41c86155c9cc9e68788b444576436e75bac6f77207bb3d38289ec612a6cf67"
+  }
+}

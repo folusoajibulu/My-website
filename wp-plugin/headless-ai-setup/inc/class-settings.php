@@ -28,6 +28,7 @@ class HAIC_Settings {
         register_setting( 'haic_settings_group', 'haic_editor_bypass' );
         register_setting( 'haic_settings_group', 'haic_revalidation_secret' );
         register_setting( 'haic_settings_group', 'haic_gemini_api_key' );
+        register_setting( 'haic_settings_group', 'haic_groq_api_key' );
         register_setting( 'haic_settings_group', 'haic_enable_ai_seo' );
     }
 
@@ -84,20 +85,27 @@ class HAIC_Settings {
                     </tr>
                 </table>
 
-                <h2>3. AI Engine (Gemini API)</h2>
+                <h2>3. AI Engine (Gemini / Groq API)</h2>
                 <table class="form-table">
                     <tr valign="top">
                         <th scope="row">Enable AI SEO Automation</th>
                         <td>
                             <input type="checkbox" name="haic_enable_ai_seo" value="1" <?php checked( 1, get_option('haic_enable_ai_seo'), true ); ?> />
-                            <p class="description">If enabled, publishing a post will automatically generate SEO titles and descriptions using Gemini.</p>
+                            <p class="description">If enabled, publishing a post will automatically format the text and generate SEO titles/descriptions.</p>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row">Gemini API Key</th>
                         <td>
                             <input type="password" name="haic_gemini_api_key" value="<?php echo esc_attr( get_option('haic_gemini_api_key') ); ?>" class="regular-text" placeholder="AIzaSy..." <?php echo $is_constant_gemini ? 'disabled' : ''; ?> />
-                            <p class="description">Get a free key from Google AI Studio. <?php if ($is_constant_gemini) echo '<br><strong>(Overridden by wp-config.php)</strong>'; ?></p>
+                            <p class="description">Get a free key from Google AI Studio.</p>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Groq API Key (Optional Override)</th>
+                        <td>
+                            <input type="password" name="haic_groq_api_key" value="<?php echo esc_attr( get_option('haic_groq_api_key') ); ?>" class="regular-text" placeholder="gsk_..." />
+                            <p class="description">Optional. If provided, Groq's high-speed Llama-3 models will be used instead of Gemini to bypass rate limits.</p>
                         </td>
                     </tr>
                 </table>
@@ -126,6 +134,11 @@ class HAIC_Settings {
     public function get_gemini_api_key() {
         if ( defined( 'HAIC_GEMINI_API_KEY' ) && HAIC_GEMINI_API_KEY ) return HAIC_GEMINI_API_KEY;
         return get_option( 'haic_gemini_api_key', '' );
+    }
+
+    public function get_groq_api_key() {
+        if ( defined( 'HAIC_GROQ_API_KEY' ) && HAIC_GROQ_API_KEY ) return HAIC_GROQ_API_KEY;
+        return get_option( 'haic_groq_api_key', '' );
     }
 
     public function is_ai_seo_enabled() {

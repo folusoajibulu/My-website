@@ -90,3 +90,59 @@ html.wp-toolbar { padding-top: 0 !important; }
 /* Alerts */
 .haic-alert { padding: 16px; border-radius: 6px; margin-bottom: 24px; font-weight: 500; transition: opacity 0.3s; }
 .haic-alert-success { background: #e6f6e6; color: #1e7e34; border: 1px solid #c3e6cb; }
+.haic-alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .haic-publisher-wrap { padding: 0 15px; }
+    
+    .haic-editor-container { 
+        display: flex; 
+        flex-direction: column; 
+    }
+    
+    .haic-editor-container form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .haic-main-column {
+        order: 1;
+    }
+    
+    .haic-sidebar-column {
+        order: 2;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .haic-top-nav, .haic-header { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 15px; 
+    }
+    
+    .haic-header {
+        align-items: center;
+    }
+    
+    .haic-toolbar form { 
+        flex-direction: column; 
+        align-items: stretch; 
+    }
+    
+    .haic-search-input { 
+        max-width: 100%; 
+    }
+    
+    .haic-post-list li { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 15px; 
+    }
+    
+    .haic-post-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

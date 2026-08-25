@@ -45,10 +45,16 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-3 text-sm text-navy">
               <li>
                 <a
-                  href="mailto:info@folusoajibulu.com"
-                  className="transition-colors hover:text-gold"
+                  href="mailto:folusoajibulu8@gmail.com"
+                  className="transition-colors hover:text-gold block"
                 >
-                  info@folusoajibulu.com
+                  folusoajibulu8@gmail.com
+                </a>
+                <a
+                  href="mailto:folusoajibulu9@gmail.com"
+                  className="transition-colors hover:text-gold block mt-2"
+                >
+                  folusoajibulu9@gmail.com
                 </a>
               </li>
               <li className="text-muted-foreground">
@@ -58,9 +64,14 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <p className="rule-top mt-14 pt-6 text-xs text-muted-foreground md:mt-16">
-          © {new Date().getFullYear()} Foluso Ajibulu. All rights reserved.
-        </p>
+        <div className="rule-top mt-14 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground md:mt-16 space-y-4 md:space-y-0">
+          <p>
+            © {new Date().getFullYear()} Foluso Ajibulu. All rights reserved.
+          </p>
+          <p>
+            Powered by <a href="https://yusufsaka.dev/" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors underline underline-offset-2">Yusuf</a>
+          </p>
+        </div>
       </div>
     </footer>
   );

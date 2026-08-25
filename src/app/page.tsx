@@ -256,7 +256,7 @@ export default async function Home() {
               To invite Commander Ajibulu for a speaking engagement, interview or public
               discussion, please send an enquiry with the date, audience and subject.
             </p>
-            <a href="mailto:info@folusoajibulu.com" className="btn-solid mt-8">
+            <a href="mailto:folusoajibulu8@gmail.com,folusoajibulu9@gmail.com" className="btn-solid mt-8">
               Send an enquiry
             </a>
           </div>
